@@ -123,7 +123,7 @@ function AdminSetup() {
               className="mt-6 flex items-start gap-2 rounded-xl border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive-foreground"
             >
               <ShieldAlert className="mt-0.5 size-4 shrink-0 text-destructive" aria-hidden />
-              <span>{UNAVAILABLE_COPY[status.reason]}</span>
+              <span>{UNAVAILABLE_COPY[status.reason] ?? "Setup is unavailable right now."}</span>
             </div>
           )}
 
