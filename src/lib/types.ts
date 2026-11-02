@@ -4,7 +4,10 @@ export interface PublicProfile {
   title: string;
   organization: string;
   bio: string;
+  /** Call / SMS number. */
   phone: string;
+  /** WhatsApp number for wa.me links (may differ from phone). */
+  whatsapp_number: string;
   whatsapp_message: string;
   email: string;
   location: string;

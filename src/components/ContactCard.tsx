@@ -8,6 +8,7 @@ import {
   Mail,
   MapPin,
   MessageCircle,
+  MessageSquare,
   Phone,
   Share2,
   UserRound,
@@ -52,7 +53,9 @@ export default function ContactCard({ profile, links }: ContactCardProps) {
     .map((w) => w[0]?.toUpperCase() ?? "")
     .join("");
 
-  const whatsappUrl = buildWhatsAppUrl(profile.phone, profile.whatsapp_message) ?? undefined;
+  const whatsappUrl =
+    buildWhatsAppUrl(profile.whatsapp_number ?? "", profile.whatsapp_message) ?? undefined;
+  const smsHref = profile.phone?.trim() ? `sms:${profile.phone.replace(/[^\d+]/g, "")}` : null;
   const websiteUrl = isValidExternalUrl(profile.website) ? profile.website.trim() : null;
   const safeLinks = links.filter((l) => isValidExternalUrl(l.url));
 
@@ -174,6 +177,19 @@ export default function ContactCard({ profile, links }: ContactCardProps) {
                 >
                   <MessageCircle aria-hidden />
                   WhatsApp
+                </a>
+              </Button>
+            )}
+            {smsHref && (
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="h-12 w-full rounded-full text-base font-semibold"
+              >
+                <a href={smsHref} aria-label={`Send a text message to ${profile.phone}`}>
+                  <MessageSquare aria-hidden />
+                  Text message
                 </a>
               </Button>
             )}

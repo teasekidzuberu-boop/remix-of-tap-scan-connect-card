@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
+import { Send } from "lucide-react";
 import { buildVCard, escapeVCardValue, vCardFileName } from "@/lib/vcard";
 import { buildWhatsAppUrl, normalizePhone } from "@/lib/phone";
-import { isValidExternalUrl } from "@/lib/social";
+import { isValidExternalUrl, platformIcon, SOCIAL_PLATFORMS } from "@/lib/social";
 import type { PublicProfile, SocialLink } from "@/lib/types";
 
 const demoProfile: PublicProfile = {
@@ -11,6 +12,7 @@ const demoProfile: PublicProfile = {
   organization: "Morgan Studio",
   bio: "Designer & builder",
   phone: "+234 800 000 0000",
+  whatsapp_number: "+234 900 000 0000",
   whatsapp_message: "Hello!",
   email: "hello@example.com",
   location: "Lagos, Nigeria",
@@ -89,6 +91,22 @@ describe("buildWhatsAppUrl", () => {
 
   it("returns null for invalid numbers", () => {
     expect(buildWhatsAppUrl("12")).toBeNull();
+  });
+
+  it("treats a missing number as no WhatsApp link, not a crash", () => {
+    expect(buildWhatsAppUrl(undefined)).toBeNull();
+    expect(buildWhatsAppUrl(null)).toBeNull();
+    expect(normalizePhone(undefined)).toBeNull();
+  });
+});
+
+describe("social platforms", () => {
+  it("offers Telegram as a platform", () => {
+    expect(SOCIAL_PLATFORMS).toContain("Telegram");
+  });
+
+  it("maps Telegram to the Send icon", () => {
+    expect(platformIcon("Telegram")).toBe(Send);
   });
 });
 

@@ -5,6 +5,7 @@ import {
   Instagram,
   Linkedin,
   Link2,
+  Send,
   Twitter,
   Youtube,
   type LucideIcon,
@@ -29,6 +30,7 @@ export const SOCIAL_PLATFORMS = [
   "X",
   "Instagram",
   "Facebook",
+  "Telegram",
   "YouTube",
   "GitHub",
   "Website",
@@ -45,6 +47,8 @@ export function platformIcon(platform: string): LucideIcon {
       return Instagram;
     case "facebook":
       return Facebook;
+    case "telegram":
+      return Send;
     case "youtube":
       return Youtube;
     case "github":
