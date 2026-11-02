@@ -92,6 +92,12 @@ describe("buildWhatsAppUrl", () => {
   it("returns null for invalid numbers", () => {
     expect(buildWhatsAppUrl("12")).toBeNull();
   });
+
+  it("treats a missing number as no WhatsApp link, not a crash", () => {
+    expect(buildWhatsAppUrl(undefined)).toBeNull();
+    expect(buildWhatsAppUrl(null)).toBeNull();
+    expect(normalizePhone(undefined)).toBeNull();
+  });
 });
 
 describe("social platforms", () => {

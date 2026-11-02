@@ -53,8 +53,9 @@ export default function ContactCard({ profile, links }: ContactCardProps) {
     .map((w) => w[0]?.toUpperCase() ?? "")
     .join("");
 
-  const whatsappUrl = buildWhatsAppUrl(profile.whatsapp_number, profile.whatsapp_message) ?? undefined;
-  const smsHref = profile.phone.trim() ? `sms:${profile.phone.replace(/[^\d+]/g, "")}` : null;
+  const whatsappUrl =
+    buildWhatsAppUrl(profile.whatsapp_number ?? "", profile.whatsapp_message) ?? undefined;
+  const smsHref = profile.phone?.trim() ? `sms:${profile.phone.replace(/[^\d+]/g, "")}` : null;
   const websiteUrl = isValidExternalUrl(profile.website) ? profile.website.trim() : null;
   const safeLinks = links.filter((l) => isValidExternalUrl(l.url));
 

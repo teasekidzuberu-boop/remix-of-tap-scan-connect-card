@@ -2,8 +2,8 @@
  * Normalize a phone number into E.164-ish digits for wa.me / tel: links.
  * Returns null when the number cannot be a valid phone number.
  */
-export function normalizePhone(raw: string): string | null {
-  const trimmed = raw.trim();
+export function normalizePhone(raw: string | null | undefined): string | null {
+  const trimmed = (raw ?? "").trim();
   if (!trimmed) return null;
   const hadPlus = trimmed.startsWith("+");
   const digits = trimmed.replace(/\D/g, "");
@@ -18,10 +18,14 @@ export function normalizePhone(raw: string): string | null {
   return e164;
 }
 
-export function buildWhatsAppUrl(phone: string, message?: string): string | null {
+export function buildWhatsAppUrl(
+  phone: string | null | undefined,
+  message?: string,
+): string | null {
   const digits = normalizePhone(phone);
   if (!digits) return null;
   const base = `https://wa.me/${digits}`;
   const text = message?.trim();
   return text ? `${base}?text=${encodeURIComponent(text)}` : base;
 }
+
