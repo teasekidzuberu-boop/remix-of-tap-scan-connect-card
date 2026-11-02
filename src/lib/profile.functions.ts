@@ -34,6 +34,7 @@ function toProfile(row: Database["public"]["Tables"]["card_profile"]["Row"]): Pu
     organization: row.organization,
     bio: row.bio,
     phone: row.phone,
+    whatsapp_number: row.whatsapp_number ?? "",
     whatsapp_message: row.whatsapp_message,
     email: row.email,
     location: row.location,

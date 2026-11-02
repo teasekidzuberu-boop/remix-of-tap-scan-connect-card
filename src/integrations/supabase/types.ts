@@ -32,6 +32,7 @@ export type Database = {
           updated_at: string
           website: string
           whatsapp_message: string
+          whatsapp_number: string | null
         }
         Insert: {
           avatar_path?: string | null
@@ -50,6 +51,7 @@ export type Database = {
           updated_at?: string
           website?: string
           whatsapp_message?: string
+          whatsapp_number?: string | null
         }
         Update: {
           avatar_path?: string | null
@@ -68,6 +70,7 @@ export type Database = {
           updated_at?: string
           website?: string
           whatsapp_message?: string
+          whatsapp_number?: string | null
         }
         Relationships: []
       }
