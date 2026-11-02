@@ -35,6 +35,7 @@ interface ProfileForm {
   organization: string;
   bio: string;
   phone: string;
+  whatsapp_number: string;
   whatsapp_message: string;
   email: string;
   location: string;
@@ -53,6 +54,7 @@ const EMPTY_FORM: ProfileForm = {
   organization: "",
   bio: "",
   phone: "",
+  whatsapp_number: "",
   whatsapp_message: "",
   email: "",
   location: "",
@@ -106,6 +108,7 @@ export default function AdminDashboard() {
         organization: row.organization,
         bio: row.bio,
         phone: row.phone,
+        whatsapp_number: row.whatsapp_number ?? "",
         whatsapp_message: row.whatsapp_message,
         email: row.email,
         location: row.location,
@@ -206,6 +209,7 @@ export default function AdminDashboard() {
           organization: form.organization.trim(),
           bio: form.bio.trim(),
           phone: form.phone.trim(),
+          whatsapp_number: form.whatsapp_number.trim(),
           whatsapp_message: form.whatsapp_message.trim(),
           email: form.email.trim(),
           location: form.location.trim(),
@@ -377,8 +381,12 @@ export default function AdminDashboard() {
           </h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone</Label>
+              <Label htmlFor="phone">Phone — text message (SMS)</Label>
               <Input id="phone" type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} className={field} placeholder="+234 …" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="whatsapp_number">WhatsApp number</Label>
+              <Input id="whatsapp_number" type="tel" value={form.whatsapp_number} onChange={(e) => set("whatsapp_number", e.target.value)} className={field} placeholder="+234 …" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
