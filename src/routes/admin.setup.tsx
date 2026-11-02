@@ -28,10 +28,11 @@ export const Route = createFileRoute("/admin/setup")({
   component: AdminSetup,
 });
 
-const UNAVAILABLE_COPY: Record<Exclude<SetupStatus["reason"], "ready">, string> = {
+const UNAVAILABLE_COPY: Record<SetupStatus["reason"], string> = {
   complete: "Admin setup is already complete. Sign in with your admin account.",
   in_progress: "Admin setup has already been used and cannot be run again.",
   unconfigured: "Setup is not configured yet. Ask the site owner to add the setup key.",
+  ready: "Setup is not available right now. Try again shortly.",
 };
 
 function AdminSetup() {
@@ -123,7 +124,7 @@ function AdminSetup() {
               className="mt-6 flex items-start gap-2 rounded-xl border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive-foreground"
             >
               <ShieldAlert className="mt-0.5 size-4 shrink-0 text-destructive" aria-hidden />
-              <span>{UNAVAILABLE_COPY[status.reason] ?? "Setup is unavailable right now."}</span>
+              <span>{UNAVAILABLE_COPY[status.reason]}</span>
             </div>
           )}
 
