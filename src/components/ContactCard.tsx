@@ -1,5 +1,4 @@
-import { useRef, useState } from "react";
-import { QRCodeCanvas, QRCodeSVG } from "qrcode.react";
+import { useState } from "react";
 import { useHydrated } from "@tanstack/react-router";
 import { toast } from "sonner";
 import {
@@ -41,7 +40,6 @@ function downloadVCard(profile: PublicProfile, links: SocialLink[]) {
 
 export default function ContactCard({ profile, links }: ContactCardProps) {
   const hydrated = useHydrated();
-  const canvasRef = useRef<HTMLDivElement>(null);
   const [saved, setSaved] = useState(false);
 
   const canonicalUrl = hydrated ? `${window.location.origin}/p/${profile.slug}` : "";
@@ -102,19 +100,6 @@ export default function ContactCard({ profile, links }: ContactCardProps) {
     void handleCopy();
   };
 
-  const handleDownloadQr = () => {
-    const canvas = canvasRef.current?.querySelector("canvas");
-    if (!canvas) return;
-    try {
-      const a = document.createElement("a");
-      a.href = canvas.toDataURL("image/png");
-      a.download = `${profile.slug}-qr.png`;
-      a.click();
-      toast.success("QR code downloaded");
-    } catch {
-      toast.error("Could not download the QR code");
-    }
-  };
 
   return (
     <div className="fade-in flex min-h-screen justify-center bg-background px-4 py-10 sm:py-16">
@@ -273,30 +258,6 @@ export default function ContactCard({ profile, links }: ContactCardProps) {
               <Share2 aria-hidden />
               Share
             </Button>
-          </div>
-
-          {/* QR code */}
-          <div className="mt-6 rounded-2xl border border-border bg-background/60 p-5">
-            <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-              Scan to open this card
-            </p>
-            {hydrated && canonicalUrl ? (
-              <div className="mt-4 flex flex-col items-center gap-3">
-                <div className="rounded-xl bg-white p-3">
-                  <QRCodeSVG value={canonicalUrl} size={140} aria-label={`QR code linking to ${canonicalUrl}`} />
-                </div>
-                <Button variant="outline" size="sm" onClick={handleDownloadQr}>
-                  <Download aria-hidden />
-                  Download QR
-                </Button>
-              </div>
-            ) : (
-              <div className="mx-auto mt-4 size-[164px] animate-pulse rounded-xl bg-secondary" aria-hidden />
-            )}
-            {/* Hidden high-resolution canvas used for PNG export */}
-            <div ref={canvasRef} className="hidden" aria-hidden>
-              {hydrated && canonicalUrl && <QRCodeCanvas value={canonicalUrl} size={512} />}
-            </div>
           </div>
         </article>
 
